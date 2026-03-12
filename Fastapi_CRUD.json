@@ -1,0 +1,174 @@
+{
+  "info": {
+    "name": "FastAPI CRUD Tutorial",
+    "_postman_id": "fastapi-crud-collection-001",
+    "description": "CRUD API for Postman training using FastAPI + PostgreSQL",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "GET All Items",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}:{{port}}/items",
+          "host": ["{{base_url}}"],
+          "port": "{{port}}",
+          "path": ["items"]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"Response is an array\", function () {",
+              "    pm.expect(pm.response.json()).to.be.an('array');",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ]
+    },
+    {
+      "name": "GET Item by ID",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{base_url}}:{{port}}/items/1",
+          "host": ["{{base_url}}"],
+          "port": "{{port}}",
+          "path": ["items", "1"]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"Response contains id field\", function () {",
+              "    const json = pm.response.json();",
+              "    pm.expect(json).to.have.property('id');",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ]
+    },
+    {
+      "name": "POST Create Item",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Sample Item\",\n  \"description\": \"Created via Postman\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}:{{port}}/items",
+          "host": ["{{base_url}}"],
+          "port": "{{port}}",
+          "path": ["items"]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"Response contains new item ID\", function () {",
+              "    const json = pm.response.json();",
+              "    pm.expect(json).to.have.property('id');",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ]
+    },
+    {
+      "name": "PUT Update Item",
+      "request": {
+        "method": "PUT",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Updated Item\",\n  \"description\": \"Updated via Postman\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}:{{port}}/items/1",
+          "host": ["{{base_url}}"],
+          "port": "{{port}}",
+          "path": ["items", "1"]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"Updated item contains correct name\", function () {",
+              "    const json = pm.response.json();",
+              "    pm.expect(json.name).to.eql('Updated Item');",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ]
+    },
+    {
+      "name": "DELETE Item",
+      "request": {
+        "method": "DELETE",
+        "url": {
+          "raw": "{{base_url}}:{{port}}/items/1",
+          "host": ["{{base_url}}"],
+          "port": "{{port}}",
+          "path": ["items", "1"]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"Response confirms deletion\", function () {",
+              "    const json = pm.response.json();",
+              "    pm.expect(json.message).to.include('deleted');",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,14 +1,6 @@
 version: "3.9"
 
 services:
-  api:
-    build: .
-    container_name: postman_api
-    ports:
-      - "8000:8000"
-    depends_on:
-      - db
-
   db:
     image: postgres:15
     container_name: postman_db
@@ -21,5 +13,15 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data
 
+
+  api:
+    build: .
+    container_name: postman_api
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+
 volumes:
   pgdata:
+  
