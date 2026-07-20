@@ -3,11 +3,11 @@ version: "3.9"
 services:
   db:
     image: postgres:15
-    container_name: postman_db
+    container_name: apinoauth_db
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: postmandb
+      POSTGRES_DB: apinoauthdb
     ports:
       - "5432:5432"
     volumes:
@@ -16,7 +16,7 @@ services:
 
   api:
     build: .
-    container_name: postman_api
+    container_name: apinoauth_api
     ports:
       - "8000:8000"
     depends_on:
